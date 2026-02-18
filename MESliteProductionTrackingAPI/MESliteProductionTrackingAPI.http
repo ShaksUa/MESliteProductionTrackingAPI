@@ -1,0 +1,6 @@
+@MESliteProductionTrackingAPI_HostAddress = http://localhost:5003
+
+GET {{MESliteProductionTrackingAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

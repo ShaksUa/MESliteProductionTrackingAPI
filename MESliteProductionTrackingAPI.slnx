@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Application/Application.csproj" Id="e26c3e70-e9f2-4e87-9c14-780c9d31a81e" />
+  <Project Path="Domain/Domain.csproj" Id="bd6976c7-e29b-4533-9ffe-58204374965b" />
+  <Project Path="Infrastructure/Infrastructure.csproj" Id="ee788dbe-45b0-4d57-8242-f656c0ecca88" />
+  <Project Path="MESliteProductionTrackingAPI/MESliteProductionTrackingAPI.csproj" />
+</Solution>
