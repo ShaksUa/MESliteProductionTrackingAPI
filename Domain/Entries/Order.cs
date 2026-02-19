@@ -31,6 +31,21 @@ namespace Domain.Entries
         }
 
         private Order() { } // For EF Core
+        private Order(int id, string title, string? description, int stationId, int operatorId, DateTime createdAt, DateTime? closedAt, Status orderStatus)
+        {
+            Id = id;
+            Title = title;
+            Description = description;
+            StationId = stationId;
+            OperatorId = operatorId;
+            CreatedAt = createdAt;
+            ClosedAt = closedAt;
+            OrderStatus = orderStatus;
+        }
+        public static Order Create(string title, string? description, int stationId, int operatorId)
+        {
+            return new Order(title, description, stationId, operatorId);
+        }
 
         public void StartOrder()
         {

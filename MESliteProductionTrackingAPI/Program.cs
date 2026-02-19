@@ -1,4 +1,7 @@
 
+using Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
+
 namespace MESliteProductionTrackingAPI
 {
     public class Program
@@ -6,6 +9,9 @@ namespace MESliteProductionTrackingAPI
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.Services.AddDbContext<AppDbContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             // Add services to the container.
 
@@ -24,7 +30,6 @@ namespace MESliteProductionTrackingAPI
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 
