@@ -1,6 +1,9 @@
-
+using System;
+using Domain.Interfaces;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using Application.Services;
+using Microsoft.OpenApi;
 
 namespace MESliteProductionTrackingAPI
 {
@@ -13,24 +16,39 @@ namespace MESliteProductionTrackingAPI
             builder.Services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-            // Add services to the container.
+            
+            builder.Services.AddScoped<ITimeService, TimeService>();
+            builder.Services.AddSingleton<IMessageService, MessageService>();
+            //builder.Services.AddScoped<CustomMiddlwareService>();
+
 
             builder.Services.AddControllers();
-            // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-            builder.Services.AddOpenApi();
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
+            });
+
+            builder.Services.AddCors(options => {
+                options.AddDefaultPolicy(policy => {
+                    policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+                });
+            });
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
+            app.UseCors();
+
             if (app.Environment.IsDevelopment())
             {
-                app.MapOpenApi();
+                app.UseSwagger();
+                app.UseSwaggerUI();
             }
 
             app.UseHttpsRedirection();
-
+            app.MapSwagger().RequireAuthorization();
             app.UseAuthorization();
-
+            app.UseMiddleware<CustomMiddlwareService>();
             app.MapControllers();
 
             app.Run();
