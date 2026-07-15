@@ -22,19 +22,16 @@ namespace Application.Services
         public async Task InvokeAsync(HttpContext context)
         {
             var startTime = DateTime.UtcNow;
-            //_logger.LogInformation("Service time before: " + startTime);
             var Id = Guid.NewGuid();
             _logger.LogInformation("Request Path: " + context.Request.Path.ToString());
             _logger.LogInformation("RemoteIpAddress: " +context.Connection.RemoteIpAddress.ToString());
             _logger.LogInformation("User-Agent: " + context.Request.Headers["User-Agent"].ToString());
             
             await _next(context);
-            context.Items.TryAdd(Id, "Id");
+           
             var endTime = DateTime.UtcNow;
-           // _logger.LogInformation("Service time after: " + endTime);
 
             var duration = endTime - startTime;
-            //_logger.LogInformation("Duration: " + duration);
         }
             
     }

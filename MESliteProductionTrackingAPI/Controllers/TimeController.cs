@@ -18,7 +18,8 @@ namespace MESliteProductionTrackingAPI.Controllers
         public IActionResult GetCurrentTime()
         {
             DateTime currentDateTime = _timeService.Now();
-            return Ok(new { Message = "Current time: ", Time = currentDateTime });
+            var valueExists = HttpContext.Items.TryGetValue("Id", out var value);
+            return Ok(new { Message = "Current time: ", Time = currentDateTime, ValueExistst = valueExists, Id = value});
         }
     }
 }
