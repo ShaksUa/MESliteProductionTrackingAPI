@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MESliteProductionTrackingAPI.Controllers
 {
-    [ApiController]
+    //[ApiController]
     [Route("api/[controller]")]
     public class TestController : ControllerBase
     {
@@ -27,9 +27,10 @@ namespace MESliteProductionTrackingAPI.Controllers
         }
 
         [HttpPost("product")]
-        public IActionResult CreateProduct (CreateProductRequest createProductRequest)
+        public IActionResult CreateProduct ([FromBody] CreateProductRequest createProductRequest)
         {
-            return Ok(createProductRequest);
+            ModelState.Values
+            return Ok(createProductRequest + "Worked" + " IsValid:" + ModelState.IsValid.ToString());
                 //("id: " + id + " Name: " + name + " Description: " + descr + " Create Time:" +creatTime);
         }
     }
