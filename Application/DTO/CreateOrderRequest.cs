@@ -2,7 +2,7 @@
 using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;
 
-namespace Application.Orders.DTO
+namespace Application.DTO
 {
     public class CreateOrderRequest
     {

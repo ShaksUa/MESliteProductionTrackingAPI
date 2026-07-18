@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Text;
 
-namespace Application.Orders.DTO
+namespace Application.DTO
 {
     public class CreateProductRequest
     {

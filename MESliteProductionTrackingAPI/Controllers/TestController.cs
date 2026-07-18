@@ -1,4 +1,4 @@
-﻿using Application.Orders.DTO;
+﻿using Application.DTO;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MESliteProductionTrackingAPI.Controllers
@@ -29,7 +29,7 @@ namespace MESliteProductionTrackingAPI.Controllers
         [HttpPost("product")]
         public IActionResult CreateProduct ([FromBody] CreateProductRequest createProductRequest)
         {
-            ModelState.Values
+            //ModelState.Values
             return Ok(createProductRequest + "Worked" + " IsValid:" + ModelState.IsValid.ToString());
                 //("id: " + id + " Name: " + name + " Description: " + descr + " Create Time:" +creatTime);
         }
