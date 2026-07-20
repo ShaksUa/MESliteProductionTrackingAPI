@@ -1,4 +1,5 @@
 ﻿using Application.DTO;
+using Application.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MESliteProductionTrackingAPI.Controllers
@@ -9,14 +10,22 @@ namespace MESliteProductionTrackingAPI.Controllers
     [Route("api/[controller]")]
     public class EmployeeController :ControllerBase
     {
+        private readonly EmployeeService _employeeService;
 
-        [HttpPost("AddEmployee")]
-        public IActionResult Add(CreateEmployeeRequest createEmployeeRequest)
+        public EmployeeController (EmployeeService employeeService)
         {
-            return Created();
+            _employeeService = employeeService;
         }
 
-        [HttpGet("GetById{id}")]
+        [HttpPost("AddEmployee")]
+        public IActionResult Add(CreateEmployeeRequest request)
+        {
+            var result = _employeeService.Create(request);
+            //return Ok(result);
+            return Created("GetById/" + result.Id, result);
+        }
+
+        [HttpGet("GetById/{id}")]
         public IActionResult GetById(int id)
         {
             if (id > 0 && id < 50) return Ok("employee with id: " + id + " exists");

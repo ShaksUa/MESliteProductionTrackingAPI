@@ -20,7 +20,7 @@ namespace MESliteProductionTrackingAPI
             builder.Services.AddScoped<ITimeService, TimeService>();
             builder.Services.AddSingleton<IMessageService, MessageService>();
             //builder.Services.AddScoped<CustomMiddlwareService>();
-
+            builder.Services.AddSingleton<EmployeeService>();
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();

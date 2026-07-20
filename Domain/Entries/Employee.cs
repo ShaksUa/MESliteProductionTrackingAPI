@@ -7,7 +7,7 @@ namespace Domain.Entries
 {
     public class Employee
     {
-        public Guid Id { get; private set; }
+        public int Id { get; private set; }
         public string Name { get; private set; }
         public int DepartmentId { get; private set; }
         public int PositionId { get; private set; }
@@ -17,10 +17,9 @@ namespace Domain.Entries
         public string Email { get; private set; }
         public DateTime CreatedAt { get; private set; }
 
-    public Employee() { }
-        public Employee(string name, int departmentId, int positionId, DateTime startTime, DateOnly? birthDate, string phone, string email)
+        public Employee(int id, string name, int departmentId, int positionId, DateTime startTime, DateOnly? birthDate, string phone, string email)
         {
-            Id = Guid.NewGuid();
+            Id = id;
             Name = name;
             DepartmentId = departmentId;
             PositionId = positionId;
