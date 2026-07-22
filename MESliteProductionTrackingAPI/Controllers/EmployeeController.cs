@@ -28,10 +28,33 @@ namespace MESliteProductionTrackingAPI.Controllers
         [HttpGet("GetById/{id}")]
         public IActionResult GetById(int id)
         {
-            if (id > 0 && id < 50) return Ok("employee with id: " + id + " exists");
-            if (id > 50) return NotFound(id + " is out of range");
-            if (id == 50) return NoContent();
-            return BadRequest(id + " id is not valid");
+            var result = _employeeService.GetById(id);
+            if (result != null) return Ok(result);
+            return NotFound();
+
+        }
+        [HttpGet("GetAll")]
+        public IActionResult GetAll()
+        {
+            var result = _employeeService.GetAll();
+            if (result != null) return Ok(result);
+            return NotFound();
+        }
+
+        [HttpDelete("DeleteById/{id}")]
+        public IActionResult DeleteById(int id)
+        {
+            var result = _employeeService.DeleteById(id);
+            if (result) return Ok("deleted: " + id);
+            return NotFound();
+        }
+
+        [HttpPatch("UpdateById/{id}")]
+        public IActionResult UpdateById(int id, UpdateEmployeeRequest updateEmployeeRequest)
+        {
+            var result = _employeeService.UpdateById(id,updateEmployeeRequest);
+            if (result) return Ok("updated: " + id);
+            return NotFound();
         }
     }
 }
