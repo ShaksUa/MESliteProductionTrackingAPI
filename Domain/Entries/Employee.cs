@@ -33,12 +33,12 @@ namespace Domain.Entries
 
         public void Update(string? name, int? departmentId, int? positionId, DateOnly? birthDate, string? phone, string? email)
         {
-            if (name != null) Name = name;
+            if (name != null)         Name = name;
             if (departmentId != null) DepartmentId = departmentId.Value;
-            if (positionId != null) PositionId = positionId.Value;
-            if (birthDate.HasValue) BirthdayDate = birthDate;
-            if (phone != null) Phone = phone;
-            if (email != null) Email = email;
+            if (positionId != null)   PositionId = positionId.Value;
+            if (birthDate.HasValue)   BirthdayDate = birthDate;
+            if (phone != null)        Phone = phone;
+            if (email != null)        Email = email;
         }
     }
 }

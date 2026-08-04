@@ -17,15 +17,15 @@ namespace MESliteProductionTrackingAPI.Controllers
             _employeeService = employeeService;
         }
 
-        [HttpPost("AddEmployee")]
+        [HttpPost]
         public IActionResult Add(CreateEmployeeRequest request)
         {
             var result = _employeeService.Create(request);
             //return Ok(result);
-            return Created("GetById/" + result.Id, result);
+            return Created("api/Employee/" + result.Id, result);
         }
 
-        [HttpGet("GetById/{id}")]
+        [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
             var result = _employeeService.GetById(id);
@@ -33,7 +33,7 @@ namespace MESliteProductionTrackingAPI.Controllers
             return NotFound();
 
         }
-        [HttpGet("GetAll")]
+        [HttpGet]
         public IActionResult GetAll()
         {
             var result = _employeeService.GetAll();
@@ -41,19 +41,19 @@ namespace MESliteProductionTrackingAPI.Controllers
             return NotFound();
         }
 
-        [HttpDelete("DeleteById/{id}")]
+        [HttpDelete("Delete/{id}")]
         public IActionResult DeleteById(int id)
         {
             var result = _employeeService.DeleteById(id);
-            if (result) return Ok("deleted: " + id);
+            if (result) return NoContent();
             return NotFound();
         }
 
-        [HttpPatch("UpdateById/{id}")]
+        [HttpPatch("{id}")]
         public IActionResult UpdateById(int id, UpdateEmployeeRequest updateEmployeeRequest)
         {
             var result = _employeeService.UpdateById(id,updateEmployeeRequest);
-            if (result) return Ok("updated: " + id);
+            if (result != null) return Ok("updated: " + id);
             return NotFound();
         }
     }

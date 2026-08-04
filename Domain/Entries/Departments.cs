@@ -11,8 +11,8 @@ namespace Domain.Entries
         public string Name { get; private set; }
         public DateTime CreatedAt { get; private set; } = DateTime.UtcNow;
         public string? Description { get; private set; }
-        public string? Email { get; set; }
-        public string? Phone { get; set; }
+        public string? Email { get; private set; }
+        public string? Phone { get; private set; }
 
         public Department (int id, string name, string? descr, string? email, string? phone)
         {
@@ -23,28 +23,12 @@ namespace Domain.Entries
             if (phone != null) this.Phone = phone;
         }
 
-        public void Update(string name, string? descr, string? email, string? phone)
+        public void Update(string? name, string? descr, string? email, string? phone)
         {
-            if (!String.IsNullOrWhiteSpace(name) && name.Length > 3)
-            {
-                this.Name = name;
-            }
-
-            if (!String.IsNullOrWhiteSpace(descr) && descr.Length > 10)
-            {
-                this.Description = descr;
-            }
-
-            if (!String.IsNullOrWhiteSpace(email))
-            {
-                this.Email = email;
-            }
-           
-            if (!String.IsNullOrWhiteSpace(phone))
-            {
-                this.Phone = phone;
-            }
-
+            if (name != null)  Name = name;
+            if (descr != null) Description = descr;
+            if (email != null) Email = email;
+            if (phone != null) Phone = phone;
         }
     }
 }

@@ -5,14 +5,15 @@ using Microsoft.VisualBasic.FileIO;
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Runtime.Intrinsics.Arm;
 using System.Text;
 
 namespace Application.Services
 {
     public class EmployeeService
     {
-        private int _nextId { get; set; } = 0;
-        public List<Employee> _employees { get; set; } = new List<Employee>();
+        private int _nextId = 0;
+        private readonly List<Employee> _employees = new ();
         public Employee Create (CreateEmployeeRequest createEmployeeRequest)
         {
             _nextId++;
@@ -32,12 +33,24 @@ namespace Application.Services
 
         public Employee GetById(int id)
         {
-            foreach(Employee emp in _employees)
+            if (id > 0 && id <= _nextId)
             {
-                if (emp.Id == id) return emp;
-            }    
-            return null;
+                foreach (Employee emp in _employees)
+                {
+                    if (emp.Id == id) return emp;
+                }
+            }
+            return default;
 
+        }
+        public bool DeleteById(int id)
+        {
+            var employee = GetById(id);
+            if (employee != null)
+            {
+                return _employees.Remove(employee);
+            }
+            return false;
         }
 
         public List<Employee> GetAll()
@@ -45,17 +58,12 @@ namespace Application.Services
            return _employees;
         }
 
-        public bool DeleteById(int id)
+        public Employee UpdateById(int id, UpdateEmployeeRequest updateEmployeeRequest)
         {
             var employee = GetById(id);
-            return _employees.Remove(employee);
-        }
-
-        public bool UpdateById(int id, UpdateEmployeeRequest updateEmployeeRequest)
-        {
-            var employee = GetById(id);
-            if (employee == null) return false;
-            employee.Update(
+            if (employee != null)
+            {
+                employee.Update(
                 updateEmployeeRequest.Name,
                 updateEmployeeRequest.DepartmentId,
                 updateEmployeeRequest.PositionId,
@@ -63,7 +71,9 @@ namespace Application.Services
                 updateEmployeeRequest.Phone,
                 updateEmployeeRequest.Email);
 
-            return true;
+                return employee;
+            }
+            return default;
         }
     }
 }

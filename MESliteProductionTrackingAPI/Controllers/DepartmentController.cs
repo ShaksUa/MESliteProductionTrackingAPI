@@ -16,11 +16,11 @@ namespace MESliteProductionTrackingAPI.Controllers
             _departmentService = departmentService;
         }
 
-        [HttpPost("Department")]
+        [HttpPost]
         public IActionResult Create(CreateDepartmentRequest createDepartmentRequest)
         {
             var result = _departmentService.Create(createDepartmentRequest);
-            return Created();
+            return Created("api/Department/" + result.Id, resul);
         }
 
         [HttpGet("{id}")]
@@ -35,8 +35,8 @@ namespace MESliteProductionTrackingAPI.Controllers
         public IActionResult Delete(int id)
         {
             var result = _departmentService.DeleteById(id);
-            if (result == true) return NotFound();
-            else return NoContent();
+            if (result) return NoContent();
+            else return NotFound();
         }
 
         [HttpPatch("{id}")]
@@ -48,7 +48,7 @@ namespace MESliteProductionTrackingAPI.Controllers
 
         }
 
-        [HttpGet("GetAllDepartments")]
+        [HttpGet]
         public IActionResult GetAll()
         {
             var result = _departmentService.GetAll();

@@ -7,7 +7,7 @@ namespace Application.DTO
 {
     public class CreateDepartmentRequest
     {
-        [Required, MinLength(3)]
+        [Required, MinLength(3), MaxLength(100)]
         public string Name { get; set; }
         [MinLength(10)]
         public string? Description { get; set; }

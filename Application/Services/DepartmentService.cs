@@ -8,14 +8,12 @@ namespace Application.Services
 {
     public class DepartmentService
     {
-        private int _nextId { get; set; } = 0;
+        private int _nextId = 0;
         private readonly List<Department> _departments = new();
         
         public Department Create(CreateDepartmentRequest createDepartment)
         {
-            if (createDepartment != null)
-            {
-                _nextId++;
+           _nextId++;
                 var department = new Department(
                     _nextId,
                      createDepartment.Name,
@@ -23,11 +21,20 @@ namespace Application.Services
                      createDepartment.Email,
                      createDepartment.Phone);
                 _departments.Add(department);
-                return department;
+          return department;
+        }
+
+        public Department GetById(int id)
+        {
+            if (id > 0 && id <= _nextId)
+            {
+                foreach (Department dep in _departments)
+                {
+                    if (dep.Id == id) return dep;
+                }
             }
             return default;
         }
-
         public bool DeleteById(int id)
         {
             var dep = GetById(id);
@@ -45,22 +52,13 @@ namespace Application.Services
             return _departments;
         }
 
-        public Department GetById(int id)
-        {
-            if (id > 0 && id <= _nextId)
-            foreach (Department dep in _departments)
-            {
-                if (dep.Id == id) return dep;
-            }
-            return default;
-        }
-
         public Department UpdateById(int id, UpdateDepartmentRequest updateDepartmentRequest)
         {
             var dep = GetById(id);
             if (dep != null)
             {
-                dep.Update(updateDepartmentRequest.Name,
+                dep.Update(
+                    updateDepartmentRequest.Name,
                     updateDepartmentRequest.Description,
                     updateDepartmentRequest.Phone,
                     updateDepartmentRequest.Email);
