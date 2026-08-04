@@ -68,5 +68,21 @@ namespace Application.Services
 
             return default;
         }
+
+        public List<int> GetDepartmentIds()
+        {
+            return _departments
+                   .Select(e => e.Id)
+                   .ToList();
+        }
+
+        public List<string> GetDepartmentNames()
+        {
+            return _departments
+                   .Select(e => e.Name)
+                   .ToList();
+        }
+
+
     }
 }

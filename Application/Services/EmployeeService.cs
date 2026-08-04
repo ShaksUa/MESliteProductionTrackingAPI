@@ -13,8 +13,8 @@ namespace Application.Services
     public class EmployeeService
     {
         private int _nextId = 0;
-        private readonly List<Employee> _employees = new ();
-        public Employee Create (CreateEmployeeRequest createEmployeeRequest)
+        private readonly List<Employee> _employees = new();
+        public Employee Create(CreateEmployeeRequest createEmployeeRequest)
         {
             _nextId++;
             var employee = new Employee(
@@ -28,34 +28,21 @@ namespace Application.Services
                 createEmployeeRequest.Email
                 );
             _employees.Add(employee);
-        return employee;
+            return employee;
         }
 
         public Employee GetById(int id)
         {
-            if (id > 0 && id <= _nextId)
-            {
-                foreach (Employee emp in _employees)
-                {
-                    if (emp.Id == id) return emp;
-                }
-            }
-            return default;
-
+            return _employees.FirstOrDefault(emp => emp.Id == id);
         }
         public bool DeleteById(int id)
         {
-            var employee = GetById(id);
-            if (employee != null)
-            {
-                return _employees.Remove(employee);
-            }
-            return false;
+            return _employees.Remove(GetById(id));
         }
 
         public List<Employee> GetAll()
-        { 
-           return _employees;
+        {
+            return _employees;
         }
 
         public Employee UpdateById(int id, UpdateEmployeeRequest updateEmployeeRequest)
@@ -75,5 +62,71 @@ namespace Application.Services
             }
             return default;
         }
+
+        public List<Employee> GetByDepartmentId(int departmentId)
+        {
+            return _employees
+                    .Where(emp => emp.DepartmentId == departmentId)
+                    .ToList();
+        }
+
+        public List<string> GetEmployeeNamesByDepartment(int departmentId)
+        {
+            return _employees
+                .Where(emp => emp.DepartmentId == departmentId)
+                .Select(emp => emp.Name)
+                .ToList();
+        }
+
+        public List<string> GetEmployeeEmails()
+        {
+            return _employees
+                .Select(e => e.Email)
+                .ToList();
+        }
+
+        public List<Employee> GetOrderedById()
+        {
+            return _employees
+                .OrderBy(e => e.Id)
+                .ToList();
+        }
+
+        public List<Employee> GetEmployeesOrderedByName()
+        {
+            return _employees
+                .OrderBy(e => e.Name)
+                .ToList();
+        }
+
+        public List<Employee> GetEmployeesOrderedByDepartment()
+        {
+            return _employees
+               .OrderBy(e => e.DepartmentId)
+               .ToList();
+        }
+
+        public List<Employee> GetEmployeesOrderedByDepartmentThenName()
+        {
+            return _employees
+              .OrderBy(e => e.DepartmentId)
+              .ThenBy(e => e.Name)
+              .ToList();
+        }
+
+        public List<int> GetUniqueDepartmentIds()
+        {
+            return _employees
+                .Select(e => e.DepartmentId)
+                .Distinct()
+                .ToList();
+        }
+
+        public bool HasOnlyDepartment(int departmentId)
+        {
+            return _employees
+                .All(e => e.DepartmentId == departmentId);
+        }
+
     }
 }
