@@ -26,24 +26,11 @@ namespace Application.Services
 
         public Department GetById(int id)
         {
-            if (id > 0 && id <= _nextId)
-            {
-                foreach (Department dep in _departments)
-                {
-                    if (dep.Id == id) return dep;
-                }
-            }
-            return default;
+            return _departments.FirstOrDefault(d=>d.Id == id);
         }
         public bool DeleteById(int id)
         {
-            var dep = GetById(id);
-            if (dep != null)
-            {
-                _departments.Remove(dep);
-                return true;
-            }
-            return false;
+            return _departments.Remove(GetById(id));
 
         }
 

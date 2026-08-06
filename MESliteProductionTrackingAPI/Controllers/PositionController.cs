@@ -6,27 +6,25 @@ namespace MESliteProductionTrackingAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class DepartmentController : ControllerBase
+    public class PositionController : ControllerBase
     {
-        private readonly DepartmentService _departmentService;
-
-        public DepartmentController(DepartmentService departmentService)
+        private readonly PositionService _positionService;
+        public PositionController(PositionService positionService)
         {
-            _departmentService = departmentService;
+            _positionService = positionService;
         }
 
         [HttpPost]
-        public IActionResult Create(CreateDepartmentRequest createDepartmentRequest)
+        public IActionResult Create(CreatePositionRequests createPositionRequests)
         {
-            var result = _departmentService.Create(createDepartmentRequest);
+            var result = _positionService.Create(createPositionRequests);
             if (result != null) return Created();
             return NoContent();
         }
-
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            var result = _departmentService.GetById(id);
+            var result = _positionService.GetById(id);
             if (result != null) return Ok(result);
             return NotFound();
         }
@@ -34,26 +32,26 @@ namespace MESliteProductionTrackingAPI.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var result = _departmentService.GetAll();
+            var result = _positionService.GetAll();
             return Ok(result);
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var result = _departmentService.DeleteById(id);
+            var result = _positionService.Delete(id);
             if (result) return NoContent();
-            else return NotFound();
+            return NotFound();
         }
 
         [HttpPatch("{id}")]
-        public IActionResult Update(int id, UpdateDepartmentRequest updateDepartmentRequest)
+        public IActionResult UpdateById(int id, UpdatePositionRequest updatePositionRequest)
         {
-            var result = _departmentService.UpdateById(id, updateDepartmentRequest);
+            var result = _positionService.UpdateById(id, updatePositionRequest);
             if (result != null) return Ok(result);
             return NotFound();
-
         }
+
 
     }
 }
