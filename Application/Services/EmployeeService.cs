@@ -128,5 +128,69 @@ namespace Application.Services
                 .All(e => e.DepartmentId == departmentId);
         }
 
+        public List<Employee> GetEmployeesStartedAfter(DateTime date)
+        {
+            return _employees
+                   .Where(e => e.StartTime > date)
+                   .ToList();
+        }
+
+        public List<Employee> GetEmployeesWithBirthday()
+        {
+            return _employees
+                    .Where(e => e.BirthdayDate.HasValue)
+                    .ToList();
+        }
+
+        public List<string> GetEmployeePhones()
+        {
+            return _employees
+                    .Select(e => e.Phone)
+                    .ToList();
+        }
+
+        public bool HasEmployees()
+        {
+            return _employees.Any();
+        }
+
+        public int CountEmployees()
+        {
+            return _employees
+                   .Count();
+        }
+        public List<Employee> GetEmployeesOrderedByCreatedAt()
+        {
+            return _employees
+                   .OrderBy(e => e.CreatedAt)
+                   .ToList();
+        }
+
+
+        public Employee GetOldestEmployee()
+        {
+            DateOnly? oldest = DateOnly.MaxValue;
+            Employee employee = null;
+            for (int i = 0; i < _employees.Count; i++)
+            {
+                var birthday = _employees[i].BirthdayDate;
+
+                if (birthday != null && birthday < oldest)
+                {
+                    oldest = birthday;
+                    employee = _employees[i];
+                }
+            }
+            return employee;
+        }
+
+        public Employee GetOldestEmployee2()
+        {
+            return _employees
+                   .Where(e=>e.BirthdayDate.HasValue)
+                   .OrderBy(e => e.BirthdayDate)
+                   .FirstOrDefault();
+
+        }
     }
 }

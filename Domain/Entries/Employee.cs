@@ -20,6 +20,10 @@ namespace Domain.Entries
 
         public Employee(int id, string name, int departmentId, int positionId, DateTime startTime, DateOnly? birthDate, string phone, string email)
         {
+            if (String.IsNullOrWhiteSpace(name)) throw new ArgumentException();
+            if (startTime > DateTime.UtcNow.AddYears(1)) throw new ArgumentException();
+            if (String.IsNullOrWhiteSpace(email)) throw new ArgumentException("Email is required.", nameof(email));
+
             Id = id;
             Name = name;
             DepartmentId = departmentId;
