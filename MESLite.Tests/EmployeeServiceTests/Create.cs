@@ -1,31 +1,23 @@
 ﻿using Application.DTO;
 using Application.Services;
+using MESLite.Tests.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace MESLite.Tests.EmployeeServiceTests
 {
-    public class Create
+    public class CreateTests
     {
         [Fact]
         public void Create_ShouldReturnEmployee_WhenRequestIsValid()
         {
             // Arrange
             var employeeService = new EmployeeService();
-            CreateEmployeeRequest createEmployeeRequest = new()
-            {
-                Name = "TestEmployee",
-                DepartmentId = 1,
-                PositionId = 2,
-                StartTime = DateTime.UtcNow,
-                BirthdayDate = null,
-                Phone = "380991112233",
-                Email = "TestEmployee@gmail.com"
-            };
+            var request = EmployeeServiceHelper.CreateValidEmployeeRequest();
 
             // Act
-            var employee = employeeService.Create(createEmployeeRequest);
+            var employee = employeeService.Create(request);
 
             // Assert
             Assert.NotNull(employee);
@@ -38,28 +30,16 @@ namespace MESLite.Tests.EmployeeServiceTests
         {
             // Arrange
             var employeeService = new EmployeeService();
-            CreateEmployeeRequest createEmployeeRequest1 = new()
-            {
-                Name = "TestEmployee",
-                DepartmentId = 1,
-                PositionId = 2,
-                StartTime = DateTime.UtcNow,
-                BirthdayDate = null,
-                Phone = "380991112233",
-                Email = "TestEmployee@gmail.com"
-            };
-            CreateEmployeeRequest createEmployeeRequest2 = new()
-            {
-                Name = "TestEmployee2",
-                DepartmentId = 1,
-                PositionId = 1,
-                StartTime = DateTime.UtcNow,
-                BirthdayDate = null,
-                Phone = "380991112299",
-                Email = "TestEmployee2@gmail.com"
-            };
+            var createEmployeeRequest1 = EmployeeServiceHelper.CreateValidEmployeeRequest();
 
-            employeeService.Create(createEmployeeRequest2);
+            var createEmployeeRequest2 = EmployeeServiceHelper.CreateValidEmployeeRequest();
+            createEmployeeRequest2.Name = "TestEmployee2";
+            createEmployeeRequest2.DepartmentId = 1;
+            createEmployeeRequest2.PositionId = 1;
+            createEmployeeRequest2.StartTime = DateTime.UtcNow;
+            createEmployeeRequest2.BirthdayDate = null;
+            createEmployeeRequest2.Phone = "380991112299";
+            createEmployeeRequest2.Email = "TestEmployee2@gmail.com";
 
             // Act
             employeeService.Create(createEmployeeRequest1);

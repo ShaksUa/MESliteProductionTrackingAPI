@@ -1,30 +1,20 @@
 ﻿using Application.DTO;
 using Application.Services;
+using MESLite.Tests.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace MESLite.Tests.EmployeeServiceTests
 {
-    public class GetById
+    public class GetByIdTests
     {
         [Fact]
         public void GetById_ShouldReturnEmployee_WhenEmployeeExists()
         {
             // Arrange
-            var employeeService = new EmployeeService();
+            var employeeService = EmployeeServiceHelper.CreateServiceWithEmployee();
 
-            CreateEmployeeRequest createEmployeeRequest = new()
-            {
-                Name = "TestEmployee",
-                DepartmentId = 1,
-                PositionId = 2,
-                StartTime = DateTime.UtcNow,
-                BirthdayDate = null,
-                Phone = "380991112233",
-                Email = "TestEmployee@gmail.com"
-            };
-            employeeService.Create(createEmployeeRequest);
             // Act
             var employee = employeeService.GetById(1);
 

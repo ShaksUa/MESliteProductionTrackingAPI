@@ -3,35 +3,23 @@ using Application.Services;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using MESLite.Tests.Helpers;
 
 namespace MESLite.Tests.EmployeeServiceTests
 {
-    public class UpdateById
+    public class UpdateByIdTests
     {
         [Fact]
         public void UpdateById_ShouldReturnEmployee_WhenEmployeeExists()
         {
             // Arrange
-            var employeeService = new EmployeeService();
-
-            CreateEmployeeRequest createEmployeeRequest = new()
-            {
-                Name = "TestEmployee",
-                DepartmentId = 1,
-                PositionId = 2,
-                StartTime = DateTime.UtcNow,
-                BirthdayDate = null,
-                Phone = "380991112233",
-                Email = "TestEmployee@gmail.com"
-            };
+            var employeeService = EmployeeServiceHelper.CreateServiceWithEmployee();
 
             UpdateEmployeeRequest updateEmployeeRequest = new()
             {
                 Email = "NewTestEmployee@gmail.com"
             };
-            employeeService.Create(createEmployeeRequest);
             // Act
-            var employee = employeeService.GetById(1);
             var updatedEmpl = employeeService.UpdateById(1, updateEmployeeRequest);
 
             // Assert
@@ -43,18 +31,7 @@ namespace MESLite.Tests.EmployeeServiceTests
         public void UpdateById_ShouldReturnNull_WhenEmployeeDoesNotExist()
         {
             // Arrange
-            var employeeService = new EmployeeService();
-
-            CreateEmployeeRequest createEmployeeRequest = new()
-            {
-                Name = "TestEmployee",
-                DepartmentId = 1,
-                PositionId = 2,
-                StartTime = DateTime.UtcNow,
-                BirthdayDate = null,
-                Phone = "380991112233",
-                Email = "TestEmployee@gmail.com"
-            };
+            var employeeService = EmployeeServiceHelper.CreateEmptyService();
 
             UpdateEmployeeRequest updateEmployeeRequest = new()
             {
@@ -71,19 +48,9 @@ namespace MESLite.Tests.EmployeeServiceTests
         public void UpdateById_ShouldUpdateOnlyProvidedField()
         {
             // Arrange
-            var employeeService = new EmployeeService();
 
-            CreateEmployeeRequest createEmployeeRequest = new()
-            {
-                Name = "TestEmployee",
-                DepartmentId = 1,
-                PositionId = 2,
-                StartTime = DateTime.UtcNow,
-                BirthdayDate = null,
-                Phone = "380991112233",
-                Email = "TestEmployee@gmail.com"
-            };
-            employeeService.Create(createEmployeeRequest);
+            var employeeService = EmployeeServiceHelper.CreateServiceWithEmployee();
+
             UpdateEmployeeRequest updateEmployeeRequest = new()
             {
                 Email = "NewTestEmployee@gmail.com"
@@ -104,19 +71,8 @@ namespace MESLite.Tests.EmployeeServiceTests
         public void UpdateById_ShouldUpdateOnlyProvidedFields()
         {
             // Arrange
-            var employeeService = new EmployeeService();
+            var employeeService = EmployeeServiceHelper.CreateServiceWithEmployee();
 
-            CreateEmployeeRequest createEmployeeRequest = new()
-            {
-                Name = "TestEmployee",
-                DepartmentId = 1,
-                PositionId = 2,
-                StartTime = DateTime.UtcNow,
-                BirthdayDate = null,
-                Phone = "380991112233",
-                Email = "TestEmployee@gmail.com"
-            };
-            employeeService.Create(createEmployeeRequest);
             UpdateEmployeeRequest updateEmployeeRequest = new()
             {
                 Name = "NewTestEmployee",
